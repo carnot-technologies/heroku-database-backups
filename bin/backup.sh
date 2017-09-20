@@ -30,10 +30,10 @@ BACKUP_FILE_NAME="$(date +"%Y-%m-%d-%H-%M")-$APP-$DATABASE.dump"
 curl -o $BACKUP_FILE_NAME `heroku pg:backups:url --app $APP`
 FINAL_FILE_NAME=$BACKUP_FILE_NAME
 
-if [[ -z "$NOGZIP" ]]; then
-  gzip $BACKUP_FILE_NAME
-  FINAL_FILE_NAME=$BACKUP_FILE_NAME.gz
-fi
+# if [[ -z "$NOGZIP" ]]; then
+#   gzip $BACKUP_FILE_NAME
+#   FINAL_FILE_NAME=$BACKUP_FILE_NAME.gz
+# fi
 
 /tmp/aws/bin/aws s3 cp $FINAL_FILE_NAME s3://$S3_BUCKET_PATH/$APP/$DATABASE/$FINAL_FILE_NAME
 
